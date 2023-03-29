@@ -1,9 +1,8 @@
 import { Router } from 'express';
+import helloController from './controllers/helloController';
 
 const routes = Router();
 
-routes.get('/', (req, res) => {
-  return res.json({ message: 'Hello World' }).status(200);
-});
+routes.get('/', helloController.getHelloMessage);
 
 export default routes;
