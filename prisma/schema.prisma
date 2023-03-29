@@ -13,4 +13,12 @@ datasource db {
 model Club {
   id   String @id @default(uuid()) @db.Uuid
   name String
+  Team Team[]
+}
+
+model Team {
+  id     String @id @default(uuid()) @db.Uuid
+  name   String
+  club   Club   @relation(fields: [clubId], references: [id])
+  clubId String @unique
 }
