@@ -1,6 +1,3 @@
-import { User } from "@prisma/client"
-import { id } from "inversify"
-
 export class ApiUser implements iUser {
 	name: string
 	password: string
@@ -43,7 +40,7 @@ export class ApiUserBuilder {
 	  return this;
 	}
 
-	save(): iUser {
+	save(): ApiUser {
 	  const user = this.user;
 	  this.user = new ApiUser();
 	  return user;
