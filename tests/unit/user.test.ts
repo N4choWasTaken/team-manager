@@ -2,8 +2,6 @@ import { User } from "@prisma/client"
 import { request } from "./helpers"
 import { PrismaClient } from '@prisma/client';
 import { ApiUser, ApiUserBuilder }from '../../src/Models/user'
-import { randomUUID } from "crypto";
-import { json } from "stream/consumers";
 
 const prisma = new PrismaClient();
 
@@ -42,14 +40,27 @@ describe("Get /users", () => {
 })
 
 describe("Get /users/:id", () => {
-	it("Should get id", async () => {
+	it("Should get user with id", async () => {
 		// Given
 		const sut = await request.get('/users/5d11814f-50c3-4850-9034-c0c0b95f5646')
 
 		// When
-		const actual = sut.body
+		const actual: User = sut.body
+		const statusCode: Number = sut.statusCode
 
 		//Then
-		expect(actual.userId).toStrictEqual("5d11814f-50c3-4850-9034-c0c0b95f5646");
+		expect(actual).toStrictEqual(new ApiUserBuilder().withName('User A').withId('5d11814f-50c3-4850-9034-c0c0b95f5646').withPassword().withEmail().save());
+		expect(statusCode).toStrictEqual(200)
+	})
+
+	it("Should return 404", async () => {
+		// Given
+		const sut = await request.get('/users/5d11814f-50c3-4850-9034-c0c0b95f5610')
+
+		// When
+		const actual = sut
+
+		//Then
+		expect(actual.statusCode).toStrictEqual(404)
 	})
 })
