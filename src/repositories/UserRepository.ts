@@ -8,9 +8,9 @@ import { UUID } from 'crypto';
 export class UserRepository implements iUserRepository {
 	prisma = new PrismaClient();
 
-	async getUsers(req: Request, res: Response): Promise<void> {
+	async getUsers(req: Request, res: Response): Promise<User[] | null> {
 		const users = await this.prisma.user.findMany()
-		res.json(users)
+		return users
 	}
 
 	async getUserWithId(req: Request, res: Response, _id: UUID): Promise<User | null>{

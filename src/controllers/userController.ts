@@ -14,7 +14,13 @@ class UserController implements iUserController {
 	}
 
 	getAllUsers = async (req: Request, res: Response) => {
-		this._userRepository.getUsers(req, res)
+		const response: User[] = await this._userRepository.getUsers(req, res)
+
+		if(response === null) {
+			res.sendStatus(404)
+		} else {
+			res.send(response)
+		}
 	}
 
 	getUser = async (req: Request, res: Response, id: UUID) => {

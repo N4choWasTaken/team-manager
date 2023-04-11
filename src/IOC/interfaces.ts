@@ -3,7 +3,7 @@ import { UUID } from 'crypto';
 import { Request, Response } from 'express';
 
 export interface iUserRepository {
-	getUsers(req: Request, res: Response): Promise<void>
+	getUsers(req: Request, res: Response): Promise<User[] | null>
 	getUserWithId(req: Request, res: Response, id: UUID): Promise<User | null>
 }
 
