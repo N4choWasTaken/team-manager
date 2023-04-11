@@ -3,6 +3,7 @@ import { request } from "./helpers"
 import { PrismaClient } from '@prisma/client';
 import { ApiUser, ApiUserBuilder }from '../../src/Models/user'
 import { randomUUID } from "crypto";
+import { json } from "stream/consumers";
 
 const prisma = new PrismaClient();
 
@@ -37,5 +38,18 @@ describe("Get /users", () => {
 
 		//Then
 		expect(actual).toStrictEqual(expected);
+	})
+})
+
+describe("Get /users/:id", () => {
+	it("Should get id", async () => {
+		// Given
+		const sut = await request.get('/users/5d11814f-50c3-4850-9034-c0c0b95f5646')
+
+		// When
+		const actual = sut.body
+
+		//Then
+		expect(actual.userId).toStrictEqual("5d11814f-50c3-4850-9034-c0c0b95f5646");
 	})
 })
