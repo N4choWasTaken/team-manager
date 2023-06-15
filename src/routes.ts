@@ -12,4 +12,6 @@ routes.get('/', helloController.getHelloMessage);
 
 routes.get('/users', userController.getAllUsers);
 
+routes.post('/users', userController.createUser);
+
 export default routes;
